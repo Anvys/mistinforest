@@ -1,4 +1,5 @@
 import {InferSchemaType, model, Schema} from "mongoose";
+import {IResources} from "../utils/types";
 
 type TMaterialType = 'Bone' | 'Fiber' | 'Leather' | 'Metal' | 'Stone' | 'Wood'
 type TMaterialAttributes = {
@@ -17,14 +18,7 @@ export type TMaterials = IResources<TMaterialType, TMaterialAttributes>
  * T: resource type Type (TMaterialType | TComponentType)
  * U: attributes Type (TMaterialAttributes | TComponentAttributes)
  */
-export interface IResources<T,U> {
-    name: string
-    type: T
-    durability: number
-    difficulty: number
-    tier: number
-    attributes: U
-}
+
 
 const MaterialsSchema = new Schema<TMaterials>({
 
@@ -43,7 +37,14 @@ const MaterialsSchema = new Schema<TMaterials>({
         Rigidity: {type: Number, default: 0},
     },
     tier: {type: Number, required: true},
+    goldCost: {type: Number, default: 0},
+    encumbrance: {type: Number, default: 0},
+    translate: {
+        En: {type: String, default: ''},
+        Fr: {type: String, default: ''},
+        Ru: {type: String, default: ''},
+    },
 })
 
 export type TMaterialsSchema = InferSchemaType<typeof MaterialsSchema>
-export default model<TMaterials>('materials', MaterialsSchema)
+export const materialModel =  model<TMaterials>('materials', MaterialsSchema)

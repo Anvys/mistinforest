@@ -1,128 +1,132 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const components_1 = __importDefault(require("../schemas/components"));
-const materials_1 = __importDefault(require("../schemas/materials"));
-const statusCodes_1 = require("../utils/statusCodes");
-const router = express_1.default.Router();
-const isDuplicate = (filter, model) => {
-    return model.find(filter);
-};
-const addRes = (res, model) => __awaiter(void 0, void 0, void 0, function* () {
-    const newComponent = new model(Object.assign({}, res));
-    yield newComponent.save();
-    return newComponent;
-});
-const updateObjectValue = (obj, newObj) => {
-    for (const [key, value] of Object.entries(obj)) {
-        const valueType = typeof value;
-        if (valueType === "object")
-            obj[key] = updateObjectValue(obj[key], newObj[key]);
-        else {
-            if (key !== '_id')
-                obj[key] = newObj[key];
-        }
-    }
-    return obj;
-};
-router.get('/get', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(`GET for ${req.query.name}`);
-    const filter = { name: req.query.name };
-    const findRes = req.query.type === 'Material' ? yield materials_1.default.find(filter) : yield components_1.default.find(filter);
-    console.log(findRes);
-    const resBody = findRes.length ? { status: statusCodes_1.StatusCodes.Ok, msg: [], data: findRes } : {
-        status: statusCodes_1.StatusCodes.notFound,
-        msg: [`Not found for ${req.query.name}`],
-        data: []
-    };
-    console.log(resBody);
-    res.json(resBody);
-}));
-router.post('/material', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const ress = req.body.resource;
-    const findDubRes = yield isDuplicate({ name: ress.name }, materials_1.default);
-    if (findDubRes.length)
-        res.json({
-            status: statusCodes_1.StatusCodes.duplicateFound,
-            msg: [`Duplicate found for ${findDubRes[0].name}`],
-            data: []
-        });
-    else {
-        const newRes = yield addRes(ress, materials_1.default); //.then(data => data).catch(err=> console.log(err))
-        res.json({ status: statusCodes_1.StatusCodes.Ok, msg: [], data: [newRes] });
-    }
-}));
-router.post('/component', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const ress = req.body.resource;
-    const findDubRes = yield isDuplicate({ name: ress.name }, components_1.default);
-    if (findDubRes.length)
-        res.json({
-            status: statusCodes_1.StatusCodes.duplicateFound,
-            msg: [`Duplicate found for ${findDubRes[0].name}`],
-            data: []
-        });
-    else {
-        const newRes = yield addRes(ress, components_1.default); //.then(data => data).catch(err=> console.log(err))
-        res.json({ status: statusCodes_1.StatusCodes.Ok, msg: [], data: [newRes] });
-    }
-}));
-router.put('/put', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('In UPDATE');
-    const filter = { name: req.query.name };
-    const findRes = req.query.type === 'Material' ? yield materials_1.default.find(filter) : yield components_1.default.find(filter);
-    console.log(findRes.length);
-    if (findRes.length) {
-        if (findRes.length > 1)
-            res.json({
-                status: statusCodes_1.StatusCodes.multipleFound,
-                msg: [`Cant update if found more then one entity for ${req.query.name}, found ${findRes.length}`],
-                data: findRes
-            });
-        else {
-            const doc = req.query.type === 'Material'
-                ? yield materials_1.default.findOneAndUpdate(filter, req.body.resource, { new: true })
-                : yield components_1.default.findOneAndUpdate(filter, req.body.resource, { new: true });
-            if (!doc)
-                res.json({
-                    status: statusCodes_1.StatusCodes.notFound,
-                    msg: [`Cant update if not for ${req.query.name}`],
-                    data: []
-                });
-            else
-                res.json({
-                    status: statusCodes_1.StatusCodes.Ok,
-                    msg: [],
-                    data: [doc]
-                });
-        }
-    }
-    else {
-        res.json({ status: statusCodes_1.StatusCodes.notFound, msg: [`Not found for ${req.query.name}`], data: [] });
-    }
-}));
-router.delete('/del', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(`DEL for ${req.query.name}`);
-    const filter = { name: req.query.name };
-    const findRes = req.query.type === 'Material' ? yield materials_1.default.findOneAndDelete(filter) : yield components_1.default.findOneAndDelete(filter);
-    console.log(`find for delete: ${findRes === null || findRes === void 0 ? void 0 : findRes.name}`);
-    const resBody = findRes ? { status: statusCodes_1.StatusCodes.Ok, msg: [], data: [findRes] } : {
-        status: statusCodes_1.StatusCodes.notFound,
-        msg: [`Not found for ${req.query.name}`],
-        data: []
-    };
-    console.log(resBody.status);
-    res.json(resBody);
-}));
-exports.default = router;
+// import express, {Request} from "express";
+// import * as core from 'express-serve-static-core';
+// import ComponentsModel, {TComponents} from "../schemas/components";
+// import MaterialModel, {TMaterials} from "../schemas/materials";
+// import {Model} from "mongoose";
+// import {StatusCodes} from "../utils/statusCodes";
+//
+// const router = express.Router();
+//
+//
+// router.get('/resources', async (req: Request<core.ParamsDictionary, TResponseAllBody, TRequestBody>, res) => {
+//     const findMatRes = await MaterialModel.find();
+//     const findComRes = await ComponentsModel.find();
+//     if (findComRes.length || findMatRes.length) res.json({
+//         status: StatusCodes.Ok,
+//         msg: [],
+//         data: {materials: findMatRes, components:findComRes}
+//     })
+//     else res.json({status: StatusCodes.notFound, msg: ['Empty bd for this category'], data: {materials: [], components: []}})
+// })
+// router.get('/materials', async (req: Request<core.ParamsDictionary, TResponseSingleBody<TMaterials>, TRequestBody>, res) => {
+//     const findMatRes = await MaterialModel.find();
+//     if (findMatRes.length) res.json({
+//         status: StatusCodes.Ok,
+//         msg: [],
+//         data: findMatRes
+//     })
+//     else res.json({status: StatusCodes.notFound, msg: ['Empty bd for this category'], data: []})
+// })
+// router.get('/components', async (req: Request<core.ParamsDictionary, TResponseSingleBody<TComponents>, TRequestBody>, res) => {
+//     const findComRes = await ComponentsModel.find();
+//     if (findComRes.length) res.json({
+//         status: StatusCodes.Ok,
+//         msg: [],
+//         data: findComRes
+//     })
+//     else res.json({status: StatusCodes.notFound, msg: ['Empty bd for this category'], data: []})
+// })
+//
+//
+// router.get('/material', async (req: Request<core.ParamsDictionary, TResponseSingleBody, TRequestBody>, res) => {
+//     console.log(`GET for ${req.query.name}`)
+//     const filter = {name: req.query.name};
+//     const findRes = req.query.type === 'Material' ? await MaterialModel.find(filter) : await ComponentsModel.find(filter);
+//     console.log(findRes)
+//     const resBody = findRes.length ? {status: StatusCodes.Ok, msg: [], data: findRes} : {
+//         status: StatusCodes.notFound,
+//         msg: [`Not found for ${req.query.name}`],
+//         data: []
+//     };
+//     console.log(resBody)
+//     res.json(resBody)
+// })
+// router.post('/material', async (req: Request<core.ParamsDictionary, TResponseSingleBody, TRequestBody>, res) => {
+//     console.log('POST')
+//     const ress = req.body.resource as TMaterials;
+//     // console.log(ress)
+//     const findDubRes = await isDuplicate<TMaterials>({name: ress.name}, MaterialModel)
+//     // console.log(findDubRes)
+//     if (findDubRes.length) {
+//         res.json({
+//             status: StatusCodes.duplicateFound,
+//             msg: [`Duplicate found for ${findDubRes[0].name}`],
+//             data: []
+//         })
+//     } else {
+//         // console.log('Adding')
+//         const newRes = await addRes<TMaterials>(ress, MaterialModel);//.then(data => data).catch(err=> console.log(err))
+//         // console.log(newRes)
+//         res.json({status: StatusCodes.Ok, msg: [], data: [newRes]})
+//     }
+// })
+// router.post('/component', async (req: Request<core.ParamsDictionary, TResponseSingleBody, TRequestBody>, res) => {
+//     const ress = req.body.resource as TComponents;
+//     const findDubRes = await isDuplicate<TComponents>({name: ress.name}, ComponentsModel)
+//     if (findDubRes.length) res.json({
+//         status: StatusCodes.duplicateFound,
+//         msg: [`Duplicate found for ${findDubRes[0].name}`],
+//         data: []
+//     })
+//     else {
+//         const newRes = await addRes<TComponents>(ress, ComponentsModel);//.then(data => data).catch(err=> console.log(err))
+//         res.json({status: StatusCodes.Ok, msg: [], data: [newRes]})
+//     }
+// })
+// router.put('/material', async (req: Request<core.ParamsDictionary, TResponseSingleBody, TRequestBody>, res) => {
+//     console.log('In UPDATE')
+//     const filter = {name: req.query.name};
+//     const findRes = req.query.type === 'Material' ? await MaterialModel.find(filter) : await ComponentsModel.find(filter);
+//     console.log(findRes.length)
+//     if (findRes.length) {
+//         if (findRes.length > 1)
+//             res.json({
+//                 status: StatusCodes.multipleFound,
+//                 msg: [`Cant update if found more then one entity for ${req.query.name}, found ${findRes.length}`],
+//                 data: findRes
+//             })
+//         else {
+//             const doc = req.query.type === 'Material'
+//                 ? await MaterialModel.findOneAndUpdate(filter, req.body.resource, {new: true})
+//                 : await ComponentsModel.findOneAndUpdate(filter, req.body.resource, {new: true});
+//             if (!doc) res.json({
+//                 status: StatusCodes.notFound,
+//                 msg: [`Cant update if not for ${req.query.name}`],
+//                 data: []
+//             })
+//             else res.json({
+//                 status: StatusCodes.Ok,
+//                 msg: [],
+//                 data: [doc]
+//             })
+//         }
+//     } else {
+//         res.json({status: StatusCodes.notFound, msg: [`Not found for ${req.query.name}`], data: []})
+//     }
+// })
+// router.delete('/material', async (req, res) => {
+//     console.log(`DEL for ${req.query.name}`)
+//     const filter = {name: req.query.name};
+//     const findRes = req.query.type === 'Material' ? await MaterialModel.findOneAndDelete(filter) : await ComponentsModel.findOneAndDelete(filter);
+//     console.log(`find for delete: ${findRes?.name}`)
+//     const resBody = findRes ? {status: StatusCodes.Ok, msg: [], data: [findRes]} : {
+//         status: StatusCodes.notFound,
+//         msg: [`Not found for ${req.query.name}`],
+//         data: []
+//     };
+//     console.log(resBody.status)
+//     res.json(resBody)
+// })
+//
+// export default router

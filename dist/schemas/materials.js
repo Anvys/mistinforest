@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.materialModel = void 0;
 const mongoose_1 = require("mongoose");
+/** Resources interface
+ * T: resource type Type (TMaterialType | TComponentType)
+ * U: attributes Type (TMaterialAttributes | TComponentAttributes)
+ */
 const MaterialsSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     type: { type: String, required: true },
@@ -17,5 +22,12 @@ const MaterialsSchema = new mongoose_1.Schema({
         Rigidity: { type: Number, default: 0 },
     },
     tier: { type: Number, required: true },
+    goldCost: { type: Number, default: 0 },
+    encumbrance: { type: Number, default: 0 },
+    translate: {
+        En: { type: String, default: '' },
+        Fr: { type: String, default: '' },
+        Ru: { type: String, default: '' },
+    },
 });
-exports.default = (0, mongoose_1.model)('materials', MaterialsSchema);
+exports.materialModel = (0, mongoose_1.model)('materials', MaterialsSchema);

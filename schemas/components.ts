@@ -1,7 +1,7 @@
 import {InferSchemaType, model, Schema} from "mongoose";
-import {IResources} from "./materials";
+import {IResources} from "../utils/types";
 
-type TComponentType = | 'Plant' | 'Gem' | 'Substance' | 'Powder' | 'Sap' | 'Pollen' | 'Artefact'
+type TComponentType = 'Plant' | 'Gem' | 'Substance' | 'Powder' | 'Sap' | 'Pollen' | 'Artefact'
 type TComponentAttributes = {
     Activator: number
     Binder: number
@@ -24,15 +24,6 @@ type TComponentAttributes = {
     Stratam: number
 }
 export type TComponents = IResources<TComponentType, TComponentAttributes>
-
-// export interface IComponents {
-//     name: string
-//     type: TComponentType
-//     durability: number
-//     difficulty: number
-//     tier: number
-//     attributes: TComponentAttributes
-// }
 
 const ComponentsSchema = new Schema<TComponents>({
     name: {type: String, required: true},
@@ -61,6 +52,13 @@ const ComponentsSchema = new Schema<TComponents>({
         Stratam: {type: Number, default: 0},
     },
     tier: {type: Number, required: true},
+    goldCost: {type: Number, default: 0},
+    encumbrance: {type: Number, default: 0},
+    translate: {
+        En: {type: String, default: ''},
+        Fr: {type: String, default: ''},
+        Ru: {type: String, default: ''},
+    },
 })
 export type TComponentsSchema = InferSchemaType<typeof ComponentsSchema>
-export default model<TComponents>('components', ComponentsSchema)
+export const componentModel =  model<TComponents>('components', ComponentsSchema)

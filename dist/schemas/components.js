@@ -1,14 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.componentModel = void 0;
 const mongoose_1 = require("mongoose");
-// export interface IComponents {
-//     name: string
-//     type: TComponentType
-//     durability: number
-//     difficulty: number
-//     tier: number
-//     attributes: TComponentAttributes
-// }
 const ComponentsSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     type: { type: String, required: true },
@@ -36,5 +29,12 @@ const ComponentsSchema = new mongoose_1.Schema({
         Stratam: { type: Number, default: 0 },
     },
     tier: { type: Number, required: true },
+    goldCost: { type: Number, default: 0 },
+    encumbrance: { type: Number, default: 0 },
+    translate: {
+        En: { type: String, default: '' },
+        Fr: { type: String, default: '' },
+        Ru: { type: String, default: '' },
+    },
 });
-exports.default = (0, mongoose_1.model)('components', ComponentsSchema);
+exports.componentModel = (0, mongoose_1.model)('components', ComponentsSchema);
