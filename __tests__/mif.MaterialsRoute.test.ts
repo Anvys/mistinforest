@@ -1,7 +1,7 @@
 import axios from "axios";
 import {StatusCodes} from "../utils/statusCodes";
 import {TRequestBody, TResponseBody} from "../utils/types";
-import {TMaterials} from "../schemas/materials";
+import {TMaterial} from "../schemas/MaterialSchema";
 
 const baseURL = 'http://127.0.0.1'
 const port = 3333;
@@ -12,7 +12,7 @@ const testName = 'testName';
 let newDataId: string;
 
 //Change THIS vars
-type TEntity = TMaterials
+type TEntity = TMaterial
 const testNameForEntity = 'Materials'
 const reqBody: TRequestBody<TEntity> = {
     type: 'Material',
@@ -20,7 +20,8 @@ const reqBody: TRequestBody<TEntity> = {
         name: testName,
         type: "Bone",
         durability: 123,
-        difficulty: 55,
+        craftDifficulty: 55,
+        gatherDifficulty: 55,
         tier: 2,
         attributes: {
             Absorbity: 0,
@@ -35,6 +36,7 @@ const reqBody: TRequestBody<TEntity> = {
         goldCost: 15,
         encumbrance: 20,
         translate: {En: testName, Fr: '', Ru: ''},
+        notes: [],
     }
 }
 

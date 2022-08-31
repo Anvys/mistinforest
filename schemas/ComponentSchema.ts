@@ -1,7 +1,7 @@
 import {InferSchemaType, model, Schema} from "mongoose";
 import {IResources} from "../utils/types";
 
-type TComponentType = 'Plant' | 'Gem' | 'Substance' | 'Powder' | 'Sap' | 'Pollen' | 'Artefact'
+export type TComponentType = 'Plant' | 'Gem' | 'Substance' | 'Powder' | 'Sap' | 'Pollen' | 'Artefact'
 type TComponentAttributes = {
     Activator: number
     Binder: number
@@ -23,13 +23,14 @@ type TComponentAttributes = {
     Pyram: number
     Stratam: number
 }
-export type TComponents = IResources<TComponentType, TComponentAttributes>
+export type TComponent = IResources<TComponentType, TComponentAttributes>
 
-const ComponentsSchema = new Schema<TComponents>({
+const ComponentsSchema = new Schema<TComponent>({
     name: {type: String, required: true},
     type: {type: String, required: true},
     durability: {type: Number, required: true},
-    difficulty: {type: Number, required: true},
+    craftDifficulty: {type: Number, required: true},
+    gatherDifficulty: {type: Number, default: 0},
     attributes: {
         Activator: {type: Number, default: 0},
         Binder: {type: Number, default: 0},
@@ -59,6 +60,7 @@ const ComponentsSchema = new Schema<TComponents>({
         Fr: {type: String, default: ''},
         Ru: {type: String, default: ''},
     },
+    notes: [{type: String}],
 })
 export type TComponentsSchema = InferSchemaType<typeof ComponentsSchema>
-export const componentModel =  model<TComponents>('components', ComponentsSchema)
+export const ComponentModel =  model<TComponent>('components', ComponentsSchema)

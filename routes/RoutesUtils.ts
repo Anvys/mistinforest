@@ -29,6 +29,9 @@ export const getResObj = <T>(data: Array<T>, status: number = StatusCodes.Ok, ms
     ({status, msg, data})
 export const validateMW = (req: Request,res: Response, next: NextFunction) => {
     // console.log(`here mw | ${req.params.id} => ${req.params.id && (req.params.id.length !==24) }`)
-    if(req.params.id && req.params.id.length !==24 )res.json(getResObj([], StatusCodes.badId, [`must be string of 24 hex characters`]))
+    if(req.params.id && req.params.id.length !==24 ){
+        console.log(`not 24 str: ${req.params.id}`)
+        res.json(getResObj([], StatusCodes.badId, [`must be string of 24 hex characters`]))
+    }
     else next()
 }

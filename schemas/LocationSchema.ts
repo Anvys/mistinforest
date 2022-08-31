@@ -8,6 +8,7 @@ export type TLocation = {
     icon: string
     region: string
     translate: TTranslateData
+    notes: Array<string>
 }
 const LocationSchema = new Schema<TLocation>({
     name: {type: String, required: true},
@@ -23,6 +24,7 @@ const LocationSchema = new Schema<TLocation>({
         Fr: {type: String, default: ''},
         Ru: {type: String, default: ''},
     },
+    notes: [{type: String}],
 })
 
 export const LocationModel = model<TLocation>('Locations', LocationSchema);

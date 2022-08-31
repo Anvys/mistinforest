@@ -1,16 +1,25 @@
-import {TMaterials} from "../schemas/materials";
-import {TComponents} from "../schemas/components";
+import {TMaterial, TMaterialType} from "../schemas/MaterialSchema";
+import {TComponent, TComponentType} from "../schemas/ComponentSchema";
+import {TNpc} from "../schemas/NpcSchema";
+import {TRegion} from "../schemas/RegionSchema";
+import {TLocation} from "../schemas/LocationSchema";
+import {TGatherPoint} from "../schemas/GatherPointSchema";
+import {TLoot} from "../schemas/LootSchema";
+
+export type TCombineData = TNpc | TRegion | TLocation | TGatherPoint | TMaterial | TComponent | TLoot
 
 export interface IResources<T, U> {
     name: string
     type: T
     durability: number
-    difficulty: number
+    craftDifficulty: number
+    gatherDifficulty: number
     tier: number
     attributes: U
     goldCost: number
     encumbrance: number
     translate: TTranslateData
+    notes: Array<string>
 }
 
 export type TTranslateLang = 'En' | 'Fr' | 'Ru'
@@ -34,9 +43,16 @@ export type TGuild =
     | 'Order of the Hippogriff'
     | 'Protector of the Rose'
 export type TReputation = 'Gantras' | 'Kortombe' | 'Larcen' | 'Thorval' | 'Wellnear'
+export type TDropTypes = TComponentType | TMaterialType
 
+export type TDrop<T extends TDropTypes> = {
+    type: T
+    name: string
+    count: number
+    chance: number
+}
 
-export type TResourceRequestBody<T = TMaterials | TComponents, U = 'Component' | 'Material'> = {
+export type TResourceRequestBody<T = TMaterial | TComponent, U = 'Component' | 'Material'> = {
     type: U
     resource: T
 }
@@ -49,5 +65,5 @@ export type TRequestBody<T> = {
     type: string
     data: T
 }
-export type TResponseSingleBody<T = TComponents | TMaterials> = TResponseBody<Array<T>>
-export type TResponseAllBody = TResponseBody<{ materials: Array<TMaterials>, components: Array<TComponents> }>
+export type TResponseSingleBody<T = TComponent | TMaterial> = TResponseBody<Array<T>>
+export type TResponseAllBody = TResponseBody<{ materials: Array<TMaterial>, components: Array<TComponent> }>

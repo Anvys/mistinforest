@@ -1,7 +1,7 @@
 import {InferSchemaType, model, Schema} from "mongoose";
-import {IResources} from "../utils/types";
+import {IResources, TTranslateData} from "../utils/types";
 
-type TMaterialType = 'Bone' | 'Fiber' | 'Leather' | 'Metal' | 'Stone' | 'Wood'
+export type TMaterialType = 'Bone' | 'Fiber' | 'Leather' | 'Metal' | 'Stone' | 'Wood'
 type TMaterialAttributes = {
     Absorbity: number
     Density: number
@@ -12,20 +12,22 @@ type TMaterialAttributes = {
     Radiance: number
     Rigidity: number
 }
-export type TMaterials = IResources<TMaterialType, TMaterialAttributes>
+export type TMaterial = IResources<TMaterialType, TMaterialAttributes>
 
+//
 /** Resources interface
  * T: resource type Type (TMaterialType | TComponentType)
  * U: attributes Type (TMaterialAttributes | TComponentAttributes)
  */
 
 
-const MaterialsSchema = new Schema<TMaterials>({
+const MaterialsSchema = new Schema<TMaterial>({
 
     name: {type: String, required: true},
     type: {type: String, required: true},
     durability: {type: Number, required: true},
-    difficulty: {type: Number, required: true},
+    craftDifficulty: {type: Number, required: true},
+    gatherDifficulty: {type: Number, required: true},
     attributes: {
         Absorbity: {type: Number, default: 0},
         Density: {type: Number, default: 0},
@@ -44,7 +46,8 @@ const MaterialsSchema = new Schema<TMaterials>({
         Fr: {type: String, default: ''},
         Ru: {type: String, default: ''},
     },
+    notes: [{type: String}],
 })
 
 export type TMaterialsSchema = InferSchemaType<typeof MaterialsSchema>
-export const materialModel =  model<TMaterials>('materials', MaterialsSchema)
+export const MaterialModel =  model<TMaterial>('materials', MaterialsSchema)

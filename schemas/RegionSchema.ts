@@ -7,6 +7,7 @@ export type TRegion = {
     terrain: TTerrain
     terrainReq: number
     translate: TTranslateData
+    notes: Array<string>
 }
 const RegionSchema = new Schema<TRegion>({
     name: {type: String, required: true},
@@ -17,6 +18,7 @@ const RegionSchema = new Schema<TRegion>({
         Fr: {type: String, default: ''},
         Ru: {type: String, default: ''},
     },
+    notes: [{type: String}],
 })
 
 export const RegionModel = model<TRegion>('Regions', RegionSchema)

@@ -21,6 +21,7 @@ const reqBody: TRequestBody<TEntity> = {
         location: 'Water',
         time: 'night',
         translate: {En: testName, Fr: '', Ru: ''},
+        notes: [],
     }
 }
 

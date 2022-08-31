@@ -6,6 +6,7 @@ export type TNpc = {
     location: string
     time: string
     translate: TTranslateData
+    notes: Array<string>
 }
 const NpcSchema = new Schema<TNpc>({
     name: {type: String, required: true},
@@ -16,6 +17,7 @@ const NpcSchema = new Schema<TNpc>({
         Fr: {type: String, default: ''},
         Ru: {type: String, default: ''},
     },
+    notes: [{type: String}],
 })
 
 export const NpcModel = model<TNpc>('Npc', NpcSchema)
