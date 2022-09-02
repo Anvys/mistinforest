@@ -24,6 +24,8 @@ export type TMaterial = IResources<TMaterialType, TMaterialAttributes>
 const MaterialsSchema = new Schema<TMaterial>({
 
     name: {type: String, required: true},
+    icon: {type: String, default: ''},
+
     type: {type: String, required: true},
     durability: {type: Number, required: true},
     craftDifficulty: {type: Number, required: true},

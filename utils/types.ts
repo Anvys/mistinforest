@@ -5,11 +5,14 @@ import {TRegion} from "../schemas/RegionSchema";
 import {TLocation} from "../schemas/LocationSchema";
 import {TGatherPoint} from "../schemas/GatherPointSchema";
 import {TLoot} from "../schemas/LootSchema";
+import {TStaminaElixir} from "../schemas/ElixirSchema";
 
-export type TCombineData = TNpc | TRegion | TLocation | TGatherPoint | TMaterial | TComponent | TLoot
+export type TCombineData = TNpc | TRegion | TLocation | TGatherPoint
+    | TMaterial | TComponent | TLoot | TStaminaElixir
 
 export interface IResources<T, U> {
     name: string
+    icon: string
     type: T
     durability: number
     craftDifficulty: number

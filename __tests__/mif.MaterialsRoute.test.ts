@@ -18,6 +18,7 @@ const reqBody: TRequestBody<TEntity> = {
     type: 'Material',
     data: {
         name: testName,
+        icon:'',
         type: "Bone",
         durability: 123,
         craftDifficulty: 55,

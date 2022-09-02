@@ -10,6 +10,7 @@ import {LocationModel, TLocation} from "./schemas/LocationSchema";
 import {RegionModel, TRegion} from "./schemas/RegionSchema";
 import {GatherPointModel, TGatherPoint} from "./schemas/GatherPointSchema";
 import {LootModel, TLoot} from "./schemas/LootSchema";
+import {StaminaElixirModel, TStaminaElixir} from "./schemas/ElixirSchema";
 
 const port = 3333;
 const allowPort = 3000;
@@ -55,6 +56,7 @@ app.use('/api/location', GenRoute<TLocation>(LocationModel));
 app.use('/api/region', GenRoute<TRegion>(RegionModel));
 app.use('/api/gatherpoint', GenRoute<TGatherPoint>(GatherPointModel));
 app.use('/api/loot', GenRoute<TLoot>(LootModel));
+app.use('/api/staminaelixir', GenRoute<TStaminaElixir>(StaminaElixirModel));
 
 app.listen(port, () => {
     console.log(`Running on port ${port}`)

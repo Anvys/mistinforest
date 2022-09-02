@@ -27,6 +27,8 @@ export type TComponent = IResources<TComponentType, TComponentAttributes>
 
 const ComponentsSchema = new Schema<TComponent>({
     name: {type: String, required: true},
+    icon: {type: String, default: ''},
+
     type: {type: String, required: true},
     durability: {type: Number, required: true},
     craftDifficulty: {type: Number, required: true},

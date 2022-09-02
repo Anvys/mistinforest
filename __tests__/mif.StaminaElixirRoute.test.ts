@@ -1,53 +1,25 @@
 import axios from "axios";
 import {StatusCodes} from "../utils/statusCodes";
 import {TRequestBody, TResponseBody} from "../utils/types";
-import {TMaterial} from "../schemas/MaterialSchema";
-import {TComponent} from "../schemas/ComponentSchema";
+import {TStaminaElixir} from "../schemas/ElixirSchema";
 
 const baseURL = 'http://127.0.0.1'
 const port = 3333;
-const instance = axios.create({
-    baseURL: `${baseURL}:${port}/api/components`,
-});
 const testName = 'testName';
 let newDataId: string;
 
 //Change THIS vars
-type TEntity = TComponent
-const testNameForEntity = 'Components'
+const instance = axios.create({
+    baseURL: `${baseURL}:${port}/api/staminaelixir`
+});
+type TEntity = TStaminaElixir
+const testNameForEntity = 'StaminaElixir'
 const reqBody: TRequestBody<TEntity> = {
-    type: 'Component',
+    type: 'StaminaElixir',
     data: {
         name: testName,
-        icon:'',
-        type: "Sap",
-        durability: 123,
-        craftDifficulty:1,
-        gatherDifficulty: 55,
-        tier: 2,
-        attributes: {
-            Activator: Math.random(),
-            Binder: Math.random(),
-            Deteriorator: Math.random(),
-            Energizer: Math.random(),
-            Focuser: Math.random(),
-            Fortifier: Math.random(),
-            Putrefier: Math.random(),
-            Stimulator: Math.random(),
-            Toner: Math.random(),
-            Tranquilizer: Math.random(),
-            Elioam: Math.random(),
-            Frimam: Math.random(),
-            Hydram: Math.random(),
-            Lectram: Math.random(),
-            Lithram: Math.random(),
-            Magnam: Math.random(),
-            Psycham: Math.random(),
-            Pyram: Math.random(),
-            Stratam: Math.random(),
-        },
-        goldCost: 15,
-        encumbrance: 20,
+        icon: '',
+        pos: {x: -23, y: 43},
         translate: {En: testName, Fr: '', Ru: ''},
         notes: [],
     }
@@ -141,3 +113,4 @@ describe(`/${testNameForEntity} routes test DELETE`, () => {
             expect(data.data.length).toBe(0);
         });
 })
+

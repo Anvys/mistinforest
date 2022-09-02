@@ -5,9 +5,10 @@ import {TComponentType} from "./ComponentSchema";
 
 export type TGatherPoint = {
     name: string
+    icon: string
     type: TGathering
-    resource: string
-    drop: Array<TDrop<TDropTypes>>
+    loot: string
+    // drop: Array<TDrop<TDropTypes>>
     count: number
     cooldown: number
     pos: TMapPosition
@@ -18,15 +19,17 @@ export type TGatherPoint = {
 
 const GatherPointSchema = new Schema<TGatherPoint>({
     name: {type: String, required: true},
+    icon: {type: String, default: ''},
+
     type: {type: String, required: true},
-    drop: [{
-        type: {type: String, required: true},
-        name: {type: String, required: true},
-        count: {type: Number, required: true},
-        chance: {type: Number, default: 100},
-    }],
+    // drop: [{
+    //     type: {type: String, required: true},
+    //     name: {type: String, required: true},
+    //     count: {type: Number, required: true},
+    //     chance: {type: Number, default: 100},
+    // }],
     count: {type: Number, required: true},
-    resource: {type: String, required: true},
+    loot: {type: String, required: true},
     cooldown: {type: Number, required: true},
     pos: {
         x: {type: Number, default: 0},
