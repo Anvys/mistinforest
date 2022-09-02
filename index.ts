@@ -12,6 +12,7 @@ import {GatherPointModel, TGatherPoint} from "./schemas/GatherPointSchema";
 import {LootModel, TLoot} from "./schemas/LootSchema";
 import {StaminaElixirModel, TStaminaElixir} from "./schemas/ElixirSchema";
 import {EventModel, TEvent} from "./schemas/EventSchema";
+import {MapObjectModel, TMapObject} from "./schemas/MapObjectsSchema";
 
 const port = 3333;
 const allowPort = 3000;
@@ -59,6 +60,7 @@ app.use('/api/gatherpoint', GenRoute<TGatherPoint>(GatherPointModel));
 app.use('/api/loot', GenRoute<TLoot>(LootModel));
 app.use('/api/staminaelixir', GenRoute<TStaminaElixir>(StaminaElixirModel));
 app.use('/api/event', GenRoute<TEvent>(EventModel));
+app.use('/api/mapobject', GenRoute<TMapObject>(MapObjectModel));
 
 app.listen(port, () => {
     console.log(`Running on port ${port}`)
