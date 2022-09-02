@@ -6,9 +6,10 @@ import {TLocation} from "../schemas/LocationSchema";
 import {TGatherPoint} from "../schemas/GatherPointSchema";
 import {TLoot} from "../schemas/LootSchema";
 import {TStaminaElixir} from "../schemas/ElixirSchema";
+import {TEvent} from "../schemas/EventSchema";
 
 export type TCombineData = TNpc | TRegion | TLocation | TGatherPoint
-    | TMaterial | TComponent | TLoot | TStaminaElixir
+    | TMaterial | TComponent | TLoot | TStaminaElixir | TEvent
 
 export interface IResources<T, U> {
     name: string
