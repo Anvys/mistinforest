@@ -18,11 +18,16 @@ const reqBody: TRequestBody<TEntity> = {
     type: 'Event',
     data: {
         name: testName,
+        icon:'',
         type: 'Blue',
         stages: [{
             name: 'stage1',
+            expr:'or',
+            num:1,
+            proc:100,
+            time:30,
             type: 'gather',
-            require: 'academic 29',
+            require: {adventure:'Academic',count: 29},
             loot: null
         }
         ],

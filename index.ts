@@ -13,6 +13,11 @@ import {LootModel, TLoot} from "./schemas/LootSchema";
 import {StaminaElixirModel, TStaminaElixir} from "./schemas/ElixirSchema";
 import {EventModel, TEvent} from "./schemas/EventSchema";
 import {MapObjectModel, TMapObject} from "./schemas/MapObjectsSchema";
+import {RecipeModel, TRecipe} from "./schemas/RecipeSchema";
+import {QuestModel, TQuest} from "./schemas/QuestSchema";
+import {MonsterModel, TMonster} from "./schemas/MonsterSchema";
+import {AbilityModel, TAbility} from "./schemas/AbilitySchema";
+import {CompanionModel, TCompanion} from "./schemas/CompanionSchema";
 
 const port = 3333;
 const allowPort = 3000;
@@ -61,6 +66,11 @@ app.use('/api/loot', GenRoute<TLoot>(LootModel));
 app.use('/api/staminaelixir', GenRoute<TStaminaElixir>(StaminaElixirModel));
 app.use('/api/event', GenRoute<TEvent>(EventModel));
 app.use('/api/mapobject', GenRoute<TMapObject>(MapObjectModel));
+app.use('/api/quest', GenRoute<TQuest>(QuestModel));
+app.use('/api/recipe', GenRoute<TRecipe>(RecipeModel));
+app.use('/api/monster', GenRoute<TMonster>(MonsterModel));
+app.use('/api/ability', GenRoute<TAbility>(AbilityModel));
+app.use('/api/companion', GenRoute<TCompanion>(CompanionModel));
 
 app.listen(port, () => {
     console.log(`Running on port ${port}`)

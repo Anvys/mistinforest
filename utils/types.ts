@@ -8,10 +8,15 @@ import {TLoot} from "../schemas/LootSchema";
 import { TStaminaElixir} from "../schemas/ElixirSchema";
 import {TEvent} from "../schemas/EventSchema";
 import {TMapObject} from "../schemas/MapObjectsSchema";
+import {TRecipe} from "../schemas/RecipeSchema";
+import {TQuest} from "../schemas/QuestSchema";
+import {TMonster} from "../schemas/MonsterSchema";
+import {TAbility} from "../schemas/AbilitySchema";
+import {TCompanion} from "../schemas/CompanionSchema";
 
 export type TCombineData = TNpc | TRegion | TLocation | TGatherPoint
     | TMaterial | TComponent | TLoot | TStaminaElixir
-    | TEvent | TMapObject
+    | TEvent | TMapObject | TRecipe | TQuest | TMonster | TAbility | TCompanion
 
 export interface IResources<T, U> {
     name: string
@@ -28,12 +33,32 @@ export interface IResources<T, U> {
     notes: Array<string>
 }
 
+export type TExpr = 'or' | 'and'
+export type TStageRequire = TRequireAdventure
+export type TRequireAdventure = {
+    adventure: TAdventure
+    count: number
+}
+export type TRequireHunt = {
+    adventure: TAdventure
+    count: number
+}
+
+
+
+export type TBonus = {
+    skill: TSkills
+    count: number
+}
+export type TAbilityType = 'Passive' | 'Active'
+export type TMonsterType = 'Monster' | 'Boss'
 export type TTranslateLang = 'En' | 'Fr' | 'Ru'
 export type TTranslateLangObj = Partial<Record<TTranslateLang, string>>
 export type TTranslateData = TTranslateLangObj//Array<TTranslateLangObj>
 
 export type TMapPosition = { x: number, y: number }
 
+export type TSkills = TWeapons | TAdventure | TCrafting | TGathering | TTerrain
 export type TWeapons = 'Axe' | 'Dagger' | 'Mace' | 'Polearm' | 'Staff' | 'Sword';
 export type TAdventure = 'Academic' | 'Athletics' | 'Exploration'
     | 'Perception' | 'Persuasion' | 'Strategy' | 'Subterfuge';

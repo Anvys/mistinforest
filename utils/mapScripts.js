@@ -12,3 +12,21 @@ fs.writeFile('image.txt', str, (err) => {
 })
 // magick montage -mode concatenate -tile 40x25 @image.txt final.jpg
 // vips dzsave ../../../../map2/tmp4/final.jpg xxx --layout google --background 0 --centre
+
+const writeFileNames = (name) =>{
+    var files = fs.readdirSync(`./src/icons/${name}`);
+    const names = files.map(v=>v.substring(0,v.length-4))
+    let namesStr = ''
+    for (let i = 0; i < names.length; i++) {
+        const isLineBreak = (i>0 && (names[i].split('-')[1] !==names[i-1].split('-')[1]))
+        namesStr = namesStr + (`${isLineBreak ? '\n':''}'${names[i]}', `)
+    }
+    fs.writeFile(`${name}.txt`,namesStr , (err) => {
+        if (err) throw err;
+    })
+}
+// writeFileNames('res')
+// writeFileNames('comp')
+// writeFileNames('other')
+// writeFileNames('Event')
+writeFileNames('location')

@@ -4,6 +4,7 @@ import {TMapPosition, TTranslateData} from "../utils/types";
 export type TLocation = {
     name: string
     exploreReq: number
+    quest: string
     pos: TMapPosition
     icon: string
     region: string
@@ -13,6 +14,7 @@ export type TLocation = {
 const LocationSchema = new Schema<TLocation>({
     name: {type: String, required: true},
     exploreReq: {type: Number, default: 0},
+    quest: {type: String, default: ''},
     pos: {
         x: {type: Number, default: 0},
         y: {type: Number, default: 0},

@@ -12,7 +12,8 @@ const LootSchema = new Schema<TLoot>({
     loot: [{
         type: {type: String, required: true},
         name: {type: String, required: true},
-        count: {type: Number, required: true},
+        countMin: {type: Number, required: true},
+        countMax: {type: Number, required: true},
         chance: {type: Number, default: 100},
     }],
     translate: {
