@@ -16,7 +16,7 @@ export type TCompanion = {
     comfort: number
     skills: Array<TBonus>
 
-
+    icon: string
     translate: TTranslateData
     notes: Array<string>
 }
@@ -31,6 +31,7 @@ const CompanionSchema = new Schema<TCompanion>({
     location: {type:String, default: ''},
     evoQuests: [{type: String, default: ''}],
     weapon: {type: String, required: true},
+    icon: {type: String, default: ''},
     weaponMaxSkill: {type: Number, required: true},
     comfort: {type: Number, required: true},
     skills: [{

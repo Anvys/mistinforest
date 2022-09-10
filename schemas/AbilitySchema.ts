@@ -1,6 +1,5 @@
 import {model, Schema} from "mongoose";
 import {TAbilityType, TTranslateData} from "../utils/types";
-import {TLoot} from "./LootSchema";
 
 
 export type TAbility = {
@@ -8,6 +7,7 @@ export type TAbility = {
     type: TAbilityType
     level: number
     stamina: number
+    cd: number
     effect: string
     icon: string
     translate: TTranslateData
@@ -18,6 +18,7 @@ const AbilitySchema = new Schema<TAbility>({
     type: {type: String, default: 'Passive'},
     level: {type: Number, required: true},
     stamina: {type: Number, required: true},
+    cd: {type: Number, default: 0},
     effect: {type: String, required: true},
     icon: {type: String, required: true},
     translate: {

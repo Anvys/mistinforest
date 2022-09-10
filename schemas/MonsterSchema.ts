@@ -13,7 +13,7 @@ export type TMonster = {
     attack: number
     armor: number
     abilities: Array<TAbility>
-    loot: TLoot
+    loot: TLoot | null
     region: string
     icon: string
     translate: TTranslateData
@@ -27,13 +27,10 @@ const MonsterSchema = new Schema<TMonster>({
     stamina: {type: Number, required: true},
     attack: {type: Number, required: true},
     armor: {type: Number, required: true},
-    abilities: [{
-        name: {type: String, required: true},
-        description: {type: String, required: true},
-    }],
-    loot: {type: String, required: true},
+    abilities: [{type: Object, required: false}],
+    loot: {type: String, default: null},
     region: {type: String, required: true},
-    icon: {type: String, required: true},
+    icon: {type: String, default: ''},
     translate: {
         En: {type: String, default: ''},
         Fr: {type: String, default: ''},

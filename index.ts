@@ -1,10 +1,13 @@
 import express from "express";
 import {dbconnect} from "./db/dbconnect";
 import {StatusCodes} from "./utils/statusCodes";
-import {ComponentModel, TComponent} from "./schemas/ComponentSchema";
-import {MaterialModel, TMaterial} from "./schemas/MaterialSchema";
+import dotenv from 'dotenv'
+dotenv.config()
 import {MapRoute} from "./routes/mapRoute";
 import {GenRoute} from "./routes/TestCRUDRoute";
+
+import {ComponentModel, TComponent} from "./schemas/ComponentSchema";
+import {MaterialModel, TMaterial} from "./schemas/MaterialSchema";
 import {NpcModel, TNpc} from "./schemas/NpcSchema";
 import {LocationModel, TLocation} from "./schemas/LocationSchema";
 import {RegionModel, TRegion} from "./schemas/RegionSchema";
@@ -18,9 +21,16 @@ import {QuestModel, TQuest} from "./schemas/QuestSchema";
 import {MonsterModel, TMonster} from "./schemas/MonsterSchema";
 import {AbilityModel, TAbility} from "./schemas/AbilitySchema";
 import {CompanionModel, TCompanion} from "./schemas/CompanionSchema";
+import {authRoute} from "./routes/authRoute";
+import {errorHandler} from "./middleware/errorHandlerMW";
+import {QuestItemModel, TQuestItem} from "./schemas/QuestItemSchema";
+
+
 
 const port = 3333;
 const allowPort = 3000;
+
+
 
 
 export const app = express()
@@ -29,7 +39,8 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', `*`);
     res.setHeader('Access-Control-Allow-Origin', `http://localhost:${allowPort}`);
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    res.setHeader("Access-Control-Allow-Credentials", "true");
     next();
 });
 app.use((req, res, next) => {
@@ -71,7 +82,11 @@ app.use('/api/recipe', GenRoute<TRecipe>(RecipeModel));
 app.use('/api/monster', GenRoute<TMonster>(MonsterModel));
 app.use('/api/ability', GenRoute<TAbility>(AbilityModel));
 app.use('/api/companion', GenRoute<TCompanion>(CompanionModel));
+app.use('/api/questitem', GenRoute<TQuestItem>(QuestItemModel));
 
+app.use('/api/auth', authRoute());
+
+app.use(errorHandler)
 app.listen(port, () => {
     console.log(`Running on port ${port}`)
     dbconnect().then((data) => console.log(`connected to ${data.connection?.db.namespace}`)).catch(err => console.log(`server layer => ${err}`))

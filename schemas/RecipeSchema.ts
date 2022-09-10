@@ -1,5 +1,5 @@
 import {model, Schema} from "mongoose";
-import {TCrafting, TTranslateData} from "../utils/types";
+import {TCrafting, TResultType, TTranslateData} from "../utils/types";
 
 export type TRecipePart = {
     name: string
@@ -12,6 +12,7 @@ export type TRecipe = {
     type: TCrafting
     baseReq: number
     parts : Array<TRecipePart>
+    resultType: TResultType
     translate: TTranslateData
     notes: Array<string>
 }
@@ -19,6 +20,7 @@ const RecipeSchema = new Schema<TRecipe>({
     name: {type: String, required: true},
     icon: {type:String, default: ''},
     type: {type:String, default: 'Alchemy'},
+    resultType: {type:String, default: 'Crowns'},
     baseReq: {type:Number, default: 0},
     parts: [{
         name: {type:String, required: true},

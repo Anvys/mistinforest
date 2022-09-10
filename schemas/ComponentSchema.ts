@@ -21,6 +21,7 @@ type TComponentAttributes = {
     Magnam: number
     Psycham: number
     Pyram: number
+    Radiam: number
     Stratam: number
 }
 export type TComponent = IResources<TComponentType, TComponentAttributes>
@@ -52,6 +53,7 @@ const ComponentsSchema = new Schema<TComponent>({
         Magnam: {type: Number, default: 0},
         Psycham: {type: Number, default: 0},
         Pyram: {type: Number, default: 0},
+        Radiam: {type: Number, default: 0},
         Stratam: {type: Number, default: 0},
     },
     tier: {type: Number, required: true},

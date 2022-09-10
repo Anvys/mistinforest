@@ -1,5 +1,9 @@
 export enum StatusCodes {
     Ok = 200,
+    Created = 201,
+    Accepted = 202,
+    LoginSuccess = 203,
+
 
     badRequest = 420,
     badId = 421,

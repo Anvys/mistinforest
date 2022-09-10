@@ -13,10 +13,12 @@ import {TQuest} from "../schemas/QuestSchema";
 import {TMonster} from "../schemas/MonsterSchema";
 import {TAbility} from "../schemas/AbilitySchema";
 import {TCompanion} from "../schemas/CompanionSchema";
+import {TQuestItem} from "../schemas/QuestItemSchema";
 
 export type TCombineData = TNpc | TRegion | TLocation | TGatherPoint
     | TMaterial | TComponent | TLoot | TStaminaElixir
     | TEvent | TMapObject | TRecipe | TQuest | TMonster | TAbility | TCompanion
+| TQuestItem
 
 export interface IResources<T, U> {
     name: string
@@ -58,6 +60,10 @@ export type TTranslateData = TTranslateLangObj//Array<TTranslateLangObj>
 
 export type TMapPosition = { x: number, y: number }
 
+
+export type TResultType = TEquipSlot
+export type TEquipSlot = 'Helmet'| 'Torso' | 'Glove' | 'Legs' | 'Boots' | 'Weapon' | 'Lantern' | 'Cape' | 'Coat'
+    | 'Shirt' | 'Pants' | 'Offhand' | 'Pendant' | 'Ring' | 'Bracelet' | 'Crowns'
 export type TSkills = TWeapons | TAdventure | TCrafting | TGathering | TTerrain
 export type TWeapons = 'Axe' | 'Dagger' | 'Mace' | 'Polearm' | 'Staff' | 'Sword';
 export type TAdventure = 'Academic' | 'Athletics' | 'Exploration'
