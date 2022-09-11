@@ -14,11 +14,12 @@ import {TMonster} from "../schemas/MonsterSchema";
 import {TAbility} from "../schemas/AbilitySchema";
 import {TCompanion} from "../schemas/CompanionSchema";
 import {TQuestItem} from "../schemas/QuestItemSchema";
+import {TQuestItemSource} from "../schemas/QuestItemSourceSchema";
 
 export type TCombineData = TNpc | TRegion | TLocation | TGatherPoint
     | TMaterial | TComponent | TLoot | TStaminaElixir
     | TEvent | TMapObject | TRecipe | TQuest | TMonster | TAbility | TCompanion
-| TQuestItem
+| TQuestItem | TQuestItemSource
 
 export interface IResources<T, U> {
     name: string
@@ -34,6 +35,12 @@ export interface IResources<T, U> {
     translate: TTranslateData
     notes: Array<string>
 }
+
+export type TQuestItemPosition = {
+    type: string,
+    position: TMapPosition | TLocation | TMonster
+}
+
 
 export type TExpr = 'or' | 'and'
 export type TStageRequire = TRequireAdventure

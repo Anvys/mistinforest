@@ -41,7 +41,7 @@ const QuestSchema = new Schema<TQuest>({
         require: {type: Object, required: false},
         timeAvailable: {type: String, default: 'Always'},
         timeSpend: {type: Number, default: 0},
-        loot: {type: String, required: true},
+        loot: {type: String, required: false},
     }],
 
     translate: {

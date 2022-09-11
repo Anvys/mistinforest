@@ -24,6 +24,7 @@ import {CompanionModel, TCompanion} from "./schemas/CompanionSchema";
 import {authRoute} from "./routes/authRoute";
 import {errorHandler} from "./middleware/errorHandlerMW";
 import {QuestItemModel, TQuestItem} from "./schemas/QuestItemSchema";
+import {QuestItemSourceModel, TQuestItemSource} from "./schemas/QuestItemSourceSchema";
 
 
 
@@ -83,6 +84,7 @@ app.use('/api/monster', GenRoute<TMonster>(MonsterModel));
 app.use('/api/ability', GenRoute<TAbility>(AbilityModel));
 app.use('/api/companion', GenRoute<TCompanion>(CompanionModel));
 app.use('/api/questitem', GenRoute<TQuestItem>(QuestItemModel));
+app.use('/api/questitemsource', GenRoute<TQuestItemSource>(QuestItemSourceModel));
 
 app.use('/api/auth', authRoute());
 
