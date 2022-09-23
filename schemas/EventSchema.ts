@@ -17,8 +17,8 @@ export type TEvent = {
     name: string
     type: string
     icon:string
-
-    stages: Array<TEventStage>
+    region: string
+    eStages: Array<TEventStage>
     pos: TMapPosition
     translate: TTranslateData
     notes: Array<string>
@@ -26,8 +26,9 @@ export type TEvent = {
 const EventSchema = new Schema<TEvent>({
     name: {type: String, required: true},
     type: {type: String, default: 'BlueFlag'},
+    region: {type: String, required: true},
     icon: {type:String, default: ''},
-    stages: [{
+    eStages: [{
         num: {type: Number, default: 1},
         proc: {type: Number, default: 1},
 

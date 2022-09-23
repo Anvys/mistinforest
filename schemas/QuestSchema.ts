@@ -22,7 +22,7 @@ export type TQuest = {
     name: string
     type: string
     availableAfter: Array<string>
-    stages: Array<TQuestStage>
+    qStages: Array<TQuestStage>
     translate: TTranslateData
     notes: Array<string>
 }
@@ -30,7 +30,7 @@ const QuestSchema = new Schema<TQuest>({
     name: {type: String, required: true},
     type: {type: String, default: 'Quest'},
     availableAfter: [{type: String, default: ''}],
-    stages: [{
+    qStages: [{
         num: {type: Number, default: 1},
         proc: {type: Number, default: 1},
         stagePosType: {type: String, default: 'pos'},

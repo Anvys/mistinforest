@@ -16,11 +16,13 @@ type TEntity = TEvent
 const testNameForEntity = 'Event'
 const reqBody: TRequestBody<TEntity> = {
     type: 'Event',
+
     data: {
+        region: 'testRegion',
         name: testName,
         icon:'',
         type: 'Blue',
-        stages: [{
+        eStages: [{
             name: 'stage1',
             expr:'or',
             num:1,

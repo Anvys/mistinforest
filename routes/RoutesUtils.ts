@@ -2,8 +2,13 @@ import {Model, Types} from "mongoose";
 import {NextFunction, Request, Response} from "express";
 import {TResponseBody} from "../utils/types";
 import {StatusCodes} from "../utils/statusCodes";
+import {QuestItemSourceModel} from "../schemas/QuestItemSourceSchema";
+import {GatherPointModel} from "../schemas/GatherPointSchema";
 
+export const allowDuplicateName = ['QuestItemSources', 'GatherPoints' ]
 export const isDuplicate = <T>(filter: { name: string }, model: Model<T>) => {
+    // if(model.name===QuestItemSourceModel || model === GatherPointModel) return []
+    if(allowDuplicateName.includes(model.modelName)) return []
     return model.find(filter);
 }
 export const addRes = async <T>(res: T, model: Model<T>) => {

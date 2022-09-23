@@ -92,7 +92,8 @@ export type TDropTypes = TComponentType | TMaterialType
 export type TDrop<T extends TDropTypes> = {
     type: T
     name: string
-    count: number
+    countMin: number
+    countMax: number
     chance: number
 }
 
