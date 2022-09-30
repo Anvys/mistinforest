@@ -28,7 +28,7 @@ const MonsterSchema = new Schema<TMonster>({
     attack: {type: Number, required: true},
     armor: {type: Number, required: true},
     abilities: [{type: Object, required: false}],
-    loot: {type: String, default: null},
+    loot: {type: Object, default: null},
     region: {type: String, required: true},
     icon: {type: String, default: ''},
     translate: {

@@ -2,12 +2,13 @@ import {TDrop, TDropTypes, TGathering, TMapPosition, TTranslateData} from "../ut
 import {model, Schema} from "mongoose";
 import {TMaterialType} from "./MaterialSchema";
 import {TComponentType} from "./ComponentSchema";
+import {TLoot} from "./LootSchema";
 
 export type TGatherPoint = {
     name: string
     icon: string
     type: TGathering
-    loot: string
+    loot: TLoot
     // drop: Array<TDrop<TDropTypes>>
     count: number
     cooldown: number
@@ -29,7 +30,7 @@ const GatherPointSchema = new Schema<TGatherPoint>({
     //     chance: {type: Number, default: 100},
     // }],
     count: {type: Number, required: true},
-    loot: {type: String, required: true},
+    loot: {type: Object, required: true},
     cooldown: {type: Number, required: true},
     pos: {
         x: {type: Number, default: 0},
