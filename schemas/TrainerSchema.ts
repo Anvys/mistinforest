@@ -2,15 +2,16 @@ import {model, Schema} from "mongoose";
 import {TAdventure, TTranslateData} from "../utils/types";
 import {TLocation} from "./LocationSchema";
 
+export type TRewCost = { type: string, name: string, count: number }
 export type TTrainer = {
     name: string
     type: TAdventure
     difficult: number
     time: number
     cooldown: number
-    cost: { type: string, name: string, count: number }
-    reward: { type: string, name: string, count: number }
-    location: TLocation
+    cost: TRewCost
+    reward: TRewCost
+    location: string
     translate: TTranslateData
     notes: Array<string>
 }

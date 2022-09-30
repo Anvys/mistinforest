@@ -24,3 +24,6 @@
 /.gitignore
 /node_modules/
 !/coverage/
+/.env
+/assets/images/map/World/
+/src/

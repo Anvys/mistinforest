@@ -30,9 +30,9 @@ import {TrainerModel, TTrainer} from "./schemas/TrainerSchema";
 
 
 
-const port = 3333;
-const allowPort = 3000;
-
+const port = Number(process.env.SERVER_PORT) || 3333;
+// const allowPort = process.env.SERVER_PORT || 3000;
+const serverHost = process.env.SERVER_HOST || `localhost`
 
 
 
@@ -40,7 +40,7 @@ export const app = express()
 app.use(express.json())
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', `*`);
-    res.setHeader('Access-Control-Allow-Origin', `http://localhost:${allowPort}`);
+    // res.setHeader('Access-Control-Allow-Origin', `http://localhost:${allowPort}`);
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     res.setHeader("Access-Control-Allow-Credentials", "true");
