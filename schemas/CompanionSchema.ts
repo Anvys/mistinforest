@@ -1,10 +1,12 @@
 import {model, Schema} from "mongoose";
 import {TBonus, TSkills, TTranslateData, TWeapons} from "../utils/types";
+import {TAbility} from "./AbilitySchema";
 
 export type TCompanion = {
     name: string
     type: 'Human' | 'Transport' | 'Tamed'
     evoType: 'Gold' | 'Silver'
+    isBattle: boolean
     levelMax: number
     lifeMax: number
     staminaMax: number
@@ -15,6 +17,7 @@ export type TCompanion = {
     weaponMaxSkill: number
     comfort: number
     skills: Array<TBonus>
+    abilities: Array<TAbility>
 
     icon: string
     translate: TTranslateData
@@ -24,6 +27,7 @@ const CompanionSchema = new Schema<TCompanion>({
     name: {type: String, required: true},
     type: {type: String, required: true},
     evoType: {type: String, required: true},
+    isBattle: {type: Boolean, default: false},
     levelMax: {type: Number, required: true},
     lifeMax: {type: Number, required: true},
     staminaMax: {type: Number, required: true},
@@ -38,7 +42,7 @@ const CompanionSchema = new Schema<TCompanion>({
         skill: {type: String, required: true},
         count: {type: Number, required: true},
     }],
-
+    abilities: [{type: Object, required: false}],
     translate: {
         En: {type: String, default: ''},
         Fr: {type: String, default: ''},

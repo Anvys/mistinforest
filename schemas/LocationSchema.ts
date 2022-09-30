@@ -8,6 +8,7 @@ export type TLocation = {
     pos: TMapPosition
     icon: string
     region: string
+    moveTo: string | ''
     translate: TTranslateData
     notes: Array<string>
 }
@@ -21,6 +22,7 @@ const LocationSchema = new Schema<TLocation>({
     },
     icon: {type: String, default: ''},
     region: {type: String},
+    moveTo: {type: String, default: ''},
     translate: {
         En: {type: String, default: ''},
         Fr: {type: String, default: ''},

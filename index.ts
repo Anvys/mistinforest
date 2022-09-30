@@ -26,6 +26,7 @@ import {errorHandler} from "./middleware/errorHandlerMW";
 import {QuestItemModel, TQuestItem} from "./schemas/QuestItemSchema";
 import {QuestItemSourceModel, TQuestItemSource} from "./schemas/QuestItemSourceSchema";
 import {ShopModel, TShop} from "./schemas/ShopSchema";
+import {TrainerModel, TTrainer} from "./schemas/TrainerSchema";
 
 
 
@@ -87,6 +88,7 @@ app.use('/api/companion', GenRoute<TCompanion>(CompanionModel));
 app.use('/api/questitem', GenRoute<TQuestItem>(QuestItemModel));
 app.use('/api/questitemsource', GenRoute<TQuestItemSource>(QuestItemSourceModel));
 app.use('/api/shop', GenRoute<TShop>(ShopModel));
+app.use('/api/trainer', GenRoute<TTrainer>(TrainerModel));
 
 app.use('/api/auth', authRoute());
 

@@ -45,6 +45,7 @@ const reqBody: TRequestBody<TEntity> = {
             Psycham: Math.random(),
             Pyram: Math.random(),
             Stratam: Math.random(),
+            Radiam: Math.random(),
         },
         goldCost: 15,
         encumbrance: 20,

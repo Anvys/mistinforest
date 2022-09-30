@@ -5,12 +5,14 @@ export type TRecipePart = {
     name: string
     component: string
     count: number
+    type: TCrafting
+    baseReq: number
 }
 export type TRecipe = {
     name: string
     icon: string
-    type: TCrafting
-    baseReq: number
+    // type: TCrafting
+    // baseReq: number
     parts : Array<TRecipePart>
     resultType: TResultType
     translate: TTranslateData
@@ -19,13 +21,15 @@ export type TRecipe = {
 const RecipeSchema = new Schema<TRecipe>({
     name: {type: String, required: true},
     icon: {type:String, default: ''},
-    type: {type:String, default: 'Alchemy'},
+
     resultType: {type:String, default: 'Crowns'},
-    baseReq: {type:Number, default: 0},
+
     parts: [{
         name: {type:String, required: true},
         component: {type:String, default: ''},
         count: {type:Number, default: 0},
+        type: {type:String, default: 'Alchemy'},
+        baseReq: {type:Number, default: 0},
     }],
     translate: {
         En: {type: String, default: ''},

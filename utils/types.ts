@@ -15,11 +15,12 @@ import {TAbility} from "../schemas/AbilitySchema";
 import {TCompanion} from "../schemas/CompanionSchema";
 import {TQuestItem} from "../schemas/QuestItemSchema";
 import {TQuestItemSource} from "../schemas/QuestItemSourceSchema";
+import {TTrainer} from "../schemas/TrainerSchema";
 
 export type TCombineData = TNpc | TRegion | TLocation | TGatherPoint
     | TMaterial | TComponent | TLoot | TStaminaElixir
     | TEvent | TMapObject | TRecipe | TQuest | TMonster | TAbility | TCompanion
-| TQuestItem | TQuestItemSource
+| TQuestItem | TQuestItemSource | TTrainer
 
 export interface IResources<T, U> {
     name: string

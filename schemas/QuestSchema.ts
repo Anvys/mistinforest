@@ -16,13 +16,16 @@ export type TQuestStage = {
     timeSpend: number
     stagePosType: 'pos' | 'npc' | 'location'
     stagePos: TMapPosition | TNpc | TLocation
-    loot: string | null
+    // loot: string | null
 }
 export type TQuest = {
     name: string
     type: string
     availableAfter: Array<string>
+    startAt: string | 'auto'
+    endAt: string | 'auto'
     qStages: Array<TQuestStage>
+    loot: string | null
     translate: TTranslateData
     notes: Array<string>
 }
@@ -30,6 +33,8 @@ const QuestSchema = new Schema<TQuest>({
     name: {type: String, required: true},
     type: {type: String, default: 'Quest'},
     availableAfter: [{type: String, default: ''}],
+    startAt: {type: String, default: 'auto'},
+    endAt: {type: String, default: 'auto'},
     qStages: [{
         num: {type: Number, default: 1},
         proc: {type: Number, default: 1},
@@ -41,8 +46,9 @@ const QuestSchema = new Schema<TQuest>({
         require: {type: Object, required: false},
         timeAvailable: {type: String, default: 'Always'},
         timeSpend: {type: Number, default: 0},
-        loot: {type: String, required: false},
+
     }],
+    loot: {type: Object, required: false, default:'--No loot--'},
 
     translate: {
         En: {type: String, default: ''},

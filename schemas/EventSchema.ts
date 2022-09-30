@@ -11,7 +11,7 @@ export type TEventStage = {
     type: string
     require: TStageRequire
     time: number
-    loot: TLoot | null
+    // loot: TLoot | null
 }
 export type TEvent = {
     name: string
@@ -19,6 +19,7 @@ export type TEvent = {
     icon:string
     region: string
     eStages: Array<TEventStage>
+    loot: TLoot | null
     pos: TMapPosition
     translate: TTranslateData
     notes: Array<string>
@@ -37,8 +38,8 @@ const EventSchema = new Schema<TEvent>({
         type: {type: String, required: true},
         require: {type: Object , required: false},
         time: {type: Number, default: 0},
-        loot: {type: String, default: null},
     }],
+    loot: {type: Object, default: null},
     pos: {
         x: {type: Number, default: 0},
         y: {type: Number, default: 0},

@@ -30,9 +30,10 @@ const reqBody: TRequestBody<TEntity> = {
             time:30,
             type: 'gather',
             require: {adventure:'Academic',count: 29},
-            loot: null
+
         }
         ],
+        loot: null,
         pos: {x: -23, y: 43},
         translate: {En: testName, Fr: '', Ru: ''},
         notes: [],
