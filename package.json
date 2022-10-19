@@ -36,6 +36,7 @@
   },
   "scripts": {
     "watchTS": "tsc -w",
+    "runCodeWars": "node ./dist/TEMP/CodeWars.js",
     "serv-start": "nodemon ./dist/index.js",
     "serv-debug": "node ./dist/index.js",
     "test": "jest --watch"

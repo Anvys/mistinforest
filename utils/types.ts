@@ -23,7 +23,6 @@ export type TCombineData = TNpc | TRegion | TLocation | TGatherPoint
 | TQuestItem | TQuestItemSource | TTrainer
 
 export interface IResources<T, U> {
-    name: string
     icon: string
     type: T
     durability: number
@@ -33,8 +32,6 @@ export interface IResources<T, U> {
     attributes: U
     goldCost: number
     encumbrance: number
-    translate: TTranslateData
-    notes: Array<string>
 }
 
 export type TQuestItemPosition = {
@@ -62,9 +59,13 @@ export type TBonus = {
 }
 export type TAbilityType = 'Passive' | 'Active'
 export type TMonsterType = 'Monster' | 'Boss'
-export type TTranslateLang = 'En' | 'Fr' | 'Ru'
-export type TTranslateLangObj = Partial<Record<TTranslateLang, string>>
-export type TTranslateData = TTranslateLangObj//Array<TTranslateLangObj>
+// export type TTranslateLang = 'En' | 'Fr' | 'Ru'
+// export type TTranslateLangObj = Partial<Record<TTranslateLang, string>>
+// export type TTranslateData = TTranslateLangObj//Array<TTranslateLangObj>
+export const translateLang = ['En' , 'Fr' , 'Ru'] as const
+export type TTranslateLang = typeof translateLang[number] //'En' | 'Fr' | 'Ru'
+export type TTranslateData = Record<TTranslateLang, string>
+
 
 export type TMapPosition = { x: number, y: number }
 
@@ -113,3 +114,5 @@ export type TRequestBody<T> = {
 }
 export type TResponseSingleBody<T = TComponent | TMaterial> = TResponseBody<Array<T>>
 export type TResponseAllBody = TResponseBody<{ materials: Array<TMaterial>, components: Array<TComponent> }>
+
+

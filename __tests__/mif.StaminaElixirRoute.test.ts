@@ -22,6 +22,7 @@ const reqBody: TRequestBody<TEntity> = {
         pos: {x: -23, y: 43},
         translate: {En: testName, Fr: '', Ru: ''},
         notes: [],
+        link:'',
     }
 }
 

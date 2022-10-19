@@ -1,10 +1,9 @@
 import {model, Schema} from "mongoose";
-import {TAdventure, TTranslateData} from "../utils/types";
-import {TLocation} from "./LocationSchema";
+import {TAdventure} from "../utils/types";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
 export type TRewCost = { type: string, name: string, count: number }
-export type TTrainer = {
-    name: string
+export type TTrainer = TCommonFields & {
     type: TAdventure
     difficult: number
     time: number
@@ -12,8 +11,6 @@ export type TTrainer = {
     cost: TRewCost
     reward: TRewCost
     location: string
-    translate: TTranslateData
-    notes: Array<string>
 }
 const TrainerSchema = new Schema<TTrainer>({
     name: {type: String, required: true},
@@ -33,12 +30,7 @@ const TrainerSchema = new Schema<TTrainer>({
     },
 
     location: {type: String, required: true},
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 
 export const TrainerModel = model<TTrainer>('Trainers', TrainerSchema)

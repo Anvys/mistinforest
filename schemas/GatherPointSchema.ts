@@ -1,34 +1,22 @@
-import {TDrop, TDropTypes, TGathering, TMapPosition, TTranslateData} from "../utils/types";
+import {TGathering, TMapPosition} from "../utils/types";
 import {model, Schema} from "mongoose";
-import {TMaterialType} from "./MaterialSchema";
-import {TComponentType} from "./ComponentSchema";
 import {TLoot} from "./LootSchema";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
-export type TGatherPoint = {
-    name: string
+export type TGatherPoint = TCommonFields & {
     icon: string
     type: TGathering
     loot: TLoot
-    // drop: Array<TDrop<TDropTypes>>
     count: number
     cooldown: number
     pos: TMapPosition
     region: string
-    translate: TTranslateData
-    notes: Array<string>
 }
 
 const GatherPointSchema = new Schema<TGatherPoint>({
     name: {type: String, required: true},
     icon: {type: String, default: ''},
-
     type: {type: String, required: true},
-    // drop: [{
-    //     type: {type: String, required: true},
-    //     name: {type: String, required: true},
-    //     count: {type: Number, required: true},
-    //     chance: {type: Number, default: 100},
-    // }],
     count: {type: Number, required: true},
     loot: {type: Object, required: true},
     cooldown: {type: Number, required: true},
@@ -37,12 +25,7 @@ const GatherPointSchema = new Schema<TGatherPoint>({
         y: {type: Number, default: 0},
     },
     region: {type: String, required: true},
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 
 export const GatherPointModel = model<TGatherPoint>('GatherPoints', GatherPointSchema);

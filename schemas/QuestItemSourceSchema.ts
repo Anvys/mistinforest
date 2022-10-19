@@ -1,26 +1,18 @@
 import {model, Schema} from "mongoose";
-import {TQuestItemPosition, TTranslateData} from "../utils/types";
+import {TQuestItemPosition} from "../utils/types";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
-export type TQuestItemSource = {
-    _id: string
-    name: string
+export type TQuestItemSource = TCommonFields & {
     posQuestItem: TQuestItemPosition
-
-    translate: TTranslateData
-    notes: Array<string>
 }
+
 const QuestItemSourceSchema = new Schema<TQuestItemSource>({
     name: {type: String, required: true},
     posQuestItem: {
         type: {type: String, required: true},
         position: {type: Object, required: true},
     },
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 
 export const QuestItemSourceModel = model<TQuestItemSource>('QuestItemSources', QuestItemSourceSchema)

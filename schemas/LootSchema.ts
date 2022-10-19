@@ -1,11 +1,9 @@
 import {model, Schema} from "mongoose";
-import {TDrop, TDropTypes, TTranslateData} from "../utils/types";
+import {TDrop, TDropTypes} from "../utils/types";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
-export type TLoot = {
-    name: string
+export type TLoot = TCommonFields & {
     loot: Array<TDrop<TDropTypes>>
-    translate: TTranslateData
-    notes: Array<string>
 }
 const LootSchema = new Schema<TLoot>({
     name: {type: String, required: true},
@@ -16,12 +14,7 @@ const LootSchema = new Schema<TLoot>({
         countMax: {type: Number, required: true},
         chance: {type: Number, default: 100},
     }],
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 
 export const LootModel = model<TLoot>('Loot', LootSchema)

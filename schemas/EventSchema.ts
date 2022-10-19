@@ -1,6 +1,7 @@
 import {model, Schema} from "mongoose";
-import {TExpr, TMapPosition, TStageRequire, TTranslateData} from "../utils/types";
+import {TExpr, TMapPosition, TStageRequire} from "../utils/types";
 import {TLoot} from "./LootSchema";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
 
 export type TEventStage = {
@@ -13,22 +14,19 @@ export type TEventStage = {
     time: number
     // loot: TLoot | null
 }
-export type TEvent = {
-    name: string
+export type TEvent = TCommonFields & {
     type: string
-    icon:string
+    icon: string
     region: string
     eStages: Array<TEventStage>
     loot: TLoot | null
     pos: TMapPosition
-    translate: TTranslateData
-    notes: Array<string>
 }
 const EventSchema = new Schema<TEvent>({
     name: {type: String, required: true},
     type: {type: String, default: 'BlueFlag'},
     region: {type: String, required: true},
-    icon: {type:String, default: ''},
+    icon: {type: String, default: ''},
     eStages: [{
         num: {type: Number, default: 1},
         proc: {type: Number, default: 1},
@@ -36,7 +34,7 @@ const EventSchema = new Schema<TEvent>({
         name: {type: String, required: true},
         expr: {type: String, default: 'or'},
         type: {type: String, required: true},
-        require: {type: Object , required: false},
+        require: {type: Object, required: false},
         time: {type: Number, default: 0},
     }],
     loot: {type: Object, default: null},
@@ -44,12 +42,7 @@ const EventSchema = new Schema<TEvent>({
         x: {type: Number, default: 0},
         y: {type: Number, default: 0},
     },
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 
 export const EventModel = model<TEvent>('Events', EventSchema)

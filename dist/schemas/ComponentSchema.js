@@ -2,14 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ComponentModel = void 0;
 const mongoose_1 = require("mongoose");
-const ComponentsSchema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    icon: { type: String, default: '' },
-    type: { type: String, required: true },
-    durability: { type: Number, required: true },
-    craftDifficulty: { type: Number, required: true },
-    gatherDifficulty: { type: Number, default: 0 },
-    attributes: {
+const commonSchema_1 = require("./commonSchema");
+const ComponentsSchema = new mongoose_1.Schema(Object.assign({ name: { type: String, required: true }, icon: { type: String, default: '' }, type: { type: String, required: true }, durability: { type: Number, required: true }, craftDifficulty: { type: Number, required: true }, gatherDifficulty: { type: Number, default: 0 }, attributes: {
         Activator: { type: Number, default: 0 },
         Binder: { type: Number, default: 0 },
         Deteriorator: { type: Number, default: 0 },
@@ -30,15 +24,5 @@ const ComponentsSchema = new mongoose_1.Schema({
         Pyram: { type: Number, default: 0 },
         Radiam: { type: Number, default: 0 },
         Stratam: { type: Number, default: 0 },
-    },
-    tier: { type: Number, required: true },
-    goldCost: { type: Number, default: 0 },
-    encumbrance: { type: Number, default: 0 },
-    translate: {
-        En: { type: String, default: '' },
-        Fr: { type: String, default: '' },
-        Ru: { type: String, default: '' },
-    },
-    notes: [{ type: String }],
-});
+    }, tier: { type: Number, required: true }, goldCost: { type: Number, default: 0 }, encumbrance: { type: Number, default: 0 } }, commonSchema_1.commonSchemaFields));
 exports.ComponentModel = (0, mongoose_1.model)('components', ComponentsSchema);

@@ -3,6 +3,7 @@ import {TExpr, TMapPosition, TStageRequire, TTranslateData} from "../utils/types
 import {TLoot} from "./LootSchema";
 import {TLocation} from "./LocationSchema";
 import {TNpc} from "./NpcSchema";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
 
 export type TQuestStage = {
@@ -18,16 +19,13 @@ export type TQuestStage = {
     stagePos: TMapPosition | TNpc | TLocation
     // loot: string | null
 }
-export type TQuest = {
-    name: string
+export type TQuest = TCommonFields & {
     type: string
     availableAfter: Array<string>
     startAt: string | 'auto'
     endAt: string | 'auto'
     qStages: Array<TQuestStage>
     loot: string | null
-    translate: TTranslateData
-    notes: Array<string>
 }
 const QuestSchema = new Schema<TQuest>({
     name: {type: String, required: true},
@@ -49,13 +47,7 @@ const QuestSchema = new Schema<TQuest>({
 
     }],
     loot: {type: Object, required: false, default:'--No loot--'},
-
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 
 export const QuestModel = model<TQuest>('Quests', QuestSchema)

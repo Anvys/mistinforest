@@ -1,11 +1,12 @@
 import {model, Schema} from "mongoose";
-import {TReputation, TTranslateData} from "../utils/types";
+import {TReputation} from "../utils/types";
 import {TRecipe} from "./RecipeSchema";
 import {TAbility} from "./AbilitySchema";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
 export type TEquip = {
     recipe: TRecipe
-    components:Array<string>
+    components: Array<string>
 }
 export type TShopContentItem = TRecipe | TAbility | TEquip
 export type TShopContentType = 'Recipe' | 'Ability' | 'Equip'
@@ -20,14 +21,10 @@ export type TShopContent = {
     price: number
     reputationRequire: TReputationRequire | null
 }
-export type TShop = {
-    name: string
+export type TShop = TCommonFields & {
     npc: string
     content: TShopContent
-
     icon: string
-    translate: TTranslateData
-    notes: Array<string>
 }
 const ShopSchema = new Schema<TShop>({
     name: {type: String, required: true},
@@ -44,12 +41,7 @@ const ShopSchema = new Schema<TShop>({
     }],
 
     icon: {type: String, required: true},
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 
 export const ShopModel = model<TShop>('Shop', ShopSchema)

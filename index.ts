@@ -29,6 +29,7 @@ import {ShopModel, TShop} from "./schemas/ShopSchema";
 import {TrainerModel, TTrainer} from "./schemas/TrainerSchema";
 
 
+export const tempIp = '92.101.149.85'
 
 const port = Number(process.env.SERVER_PORT) || 3333;
 // const allowPort = process.env.SERVER_PORT || 3000;

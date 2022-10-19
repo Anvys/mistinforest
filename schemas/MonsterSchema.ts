@@ -1,11 +1,11 @@
 import {model, Schema} from "mongoose";
-import {TMonsterType, TTranslateData} from "../utils/types";
+import {TMonsterType} from "../utils/types";
 import {TLoot} from "./LootSchema";
 import {TAbility} from "./AbilitySchema";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
 
-export type TMonster = {
-    name: string
+export type TMonster = TCommonFields & {
     type: TMonsterType
     level: number
     life: number
@@ -16,8 +16,6 @@ export type TMonster = {
     loot: TLoot | null
     region: string
     icon: string
-    translate: TTranslateData
-    notes: Array<string>
 }
 const MonsterSchema = new Schema<TMonster>({
     name: {type: String, required: true},
@@ -31,12 +29,7 @@ const MonsterSchema = new Schema<TMonster>({
     loot: {type: Object, default: null},
     region: {type: String, required: true},
     icon: {type: String, default: ''},
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 
 export const MonsterModel = model<TMonster>('Monsters', MonsterSchema)

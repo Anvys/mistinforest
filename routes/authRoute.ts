@@ -13,6 +13,8 @@ export const generateToken = (id: string) => {
         expiresIn: '30d',
     })
 }
+
+//fetch('http://localhost:3333/api/auth/new',{method:'post', body:JSON.stringify({login:'test', password:'test123',icon:''}),headers:{'content-type':'application/json'}}).then(json => console.log(json)).catch(e=>console.log(e.message))
 export const authRoute = (): Router => {
     // type TGetOneReq = Request<{ id: string }>;
     // type TPostReq = Request<{ id: string }, {}, TRequestBody<T>>;
@@ -22,7 +24,7 @@ export const authRoute = (): Router => {
 // @route   POST /api/auth/new
 // @access  Public
     route.post('/new', asyncHandler(async (req, res) => {
-        console.log(`New register`)
+        console.log(`New register`, req.body)
         const {login, password, icon} = req.body
 
         if (!login || !password) {
@@ -33,52 +35,54 @@ export const authRoute = (): Router => {
                 data: {}
             })
             throw new Error('Please add all fields')
-        }
-
-        // Check if user exists
-        const userExists = await UserModel.findOne({login})
-
-        if (userExists) {
-            res.status(StatusCodes.badRequest)
-            res.json({
-                status: StatusCodes.badRequest,
-                msg: ['User already exists'],
-                data: {}
-            })
-            throw new Error('User already exists')
-        }
-
-        // Hash password
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password, salt)
-
-        // Create user
-        const user = await UserModel.create({
-            login,
-            icon,
-            password: hashedPassword,
-        })
-
-        if (user) {
-            res.status(StatusCodes.Created).json({
-                status: StatusCodes.Created,
-                msg: [],
-                data: {
-                    _id: user.id,
-                    login: user.login,
-                    icon: user.icon,
-                    token: generateToken(String(user._id)),
-                }
-
-            })
         } else {
-            res.status(StatusCodes.badRequest)
-            res.json({
-                status: StatusCodes.badRequest,
-                msg: ['Invalid user data'],
-                data: {}
+
+
+            // Check if user exists
+            const userExists = await UserModel.findOne({login})
+
+            if (userExists) {
+                res.status(StatusCodes.badRequest)
+                res.json({
+                    status: StatusCodes.badRequest,
+                    msg: ['User already exists'],
+                    data: {}
+                })
+                throw new Error('User already exists')
+            }
+
+            // Hash password
+            const salt = await bcrypt.genSalt(10)
+            const hashedPassword = await bcrypt.hash(password, salt)
+
+            // Create user
+            const user = await UserModel.create({
+                login,
+                icon,
+                password: hashedPassword,
             })
-            throw new Error('Invalid user data')
+
+            if (user) {
+                res.status(StatusCodes.Created).json({
+                    status: StatusCodes.Created,
+                    msg: [],
+                    data: {
+                        _id: user.id,
+                        login: user.login,
+                        icon: user.icon,
+                        token: generateToken(String(user._id)),
+                    }
+
+                })
+            } else {
+                res.status(StatusCodes.badRequest)
+                res.json({
+                    status: StatusCodes.badRequest,
+                    msg: ['Invalid user data'],
+                    data: {}
+                })
+                throw new Error('Invalid user data')
+            }
         }
     }))
     // @desc    Authenticate a user
@@ -105,10 +109,10 @@ export const authRoute = (): Router => {
         } else {
             res.status(StatusCodes.badRequest)
                 .json({
-                status: StatusCodes.badRequest,
-                msg: ['Invalid credentials'],
-                data: {}
-            })
+                    status: StatusCodes.badRequest,
+                    msg: ['Invalid credentials'],
+                    data: {}
+                })
             throw new Error('Invalid credentials')
         }
     }))

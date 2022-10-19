@@ -26,6 +26,7 @@ const generateToken = (id) => {
     });
 };
 exports.generateToken = generateToken;
+//fetch('http://localhost:3333/api/auth/new',{method:'post', body:JSON.stringify({login:'test', password:'test123',icon:''}),headers:{'content-type':'application/json'}}).then(json => console.log(json)).catch(e=>console.log(e.message))
 const authRoute = () => {
     // type TGetOneReq = Request<{ id: string }>;
     // type TPostReq = Request<{ id: string }, {}, TRequestBody<T>>;
@@ -35,7 +36,7 @@ const authRoute = () => {
     // @route   POST /api/auth/new
     // @access  Public
     route.post('/new', (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(`New register`);
+        console.log(`New register`, req.body);
         const { login, password, icon } = req.body;
         if (!login || !password) {
             res.status(statusCodes_1.StatusCodes.badRequest);
@@ -46,46 +47,48 @@ const authRoute = () => {
             });
             throw new Error('Please add all fields');
         }
-        // Check if user exists
-        const userExists = yield UserSchema_1.UserModel.findOne({ login });
-        if (userExists) {
-            res.status(statusCodes_1.StatusCodes.badRequest);
-            res.json({
-                status: statusCodes_1.StatusCodes.badRequest,
-                msg: ['User already exists'],
-                data: {}
-            });
-            throw new Error('User already exists');
-        }
-        // Hash password
-        const salt = yield bcryptjs_1.default.genSalt(10);
-        const hashedPassword = yield bcryptjs_1.default.hash(password, salt);
-        // Create user
-        const user = yield UserSchema_1.UserModel.create({
-            login,
-            icon,
-            password: hashedPassword,
-        });
-        if (user) {
-            res.status(statusCodes_1.StatusCodes.Created).json({
-                status: statusCodes_1.StatusCodes.Created,
-                msg: [],
-                data: {
-                    _id: user.id,
-                    login: user.login,
-                    icon: user.icon,
-                    token: (0, exports.generateToken)(String(user._id)),
-                }
-            });
-        }
         else {
-            res.status(statusCodes_1.StatusCodes.badRequest);
-            res.json({
-                status: statusCodes_1.StatusCodes.badRequest,
-                msg: ['Invalid user data'],
-                data: {}
+            // Check if user exists
+            const userExists = yield UserSchema_1.UserModel.findOne({ login });
+            if (userExists) {
+                res.status(statusCodes_1.StatusCodes.badRequest);
+                res.json({
+                    status: statusCodes_1.StatusCodes.badRequest,
+                    msg: ['User already exists'],
+                    data: {}
+                });
+                throw new Error('User already exists');
+            }
+            // Hash password
+            const salt = yield bcryptjs_1.default.genSalt(10);
+            const hashedPassword = yield bcryptjs_1.default.hash(password, salt);
+            // Create user
+            const user = yield UserSchema_1.UserModel.create({
+                login,
+                icon,
+                password: hashedPassword,
             });
-            throw new Error('Invalid user data');
+            if (user) {
+                res.status(statusCodes_1.StatusCodes.Created).json({
+                    status: statusCodes_1.StatusCodes.Created,
+                    msg: [],
+                    data: {
+                        _id: user.id,
+                        login: user.login,
+                        icon: user.icon,
+                        token: (0, exports.generateToken)(String(user._id)),
+                    }
+                });
+            }
+            else {
+                res.status(statusCodes_1.StatusCodes.badRequest);
+                res.json({
+                    status: statusCodes_1.StatusCodes.badRequest,
+                    msg: ['Invalid user data'],
+                    data: {}
+                });
+                throw new Error('Invalid user data');
+            }
         }
     })));
     // @desc    Authenticate a user

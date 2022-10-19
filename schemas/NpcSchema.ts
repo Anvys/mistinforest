@@ -1,23 +1,16 @@
 import {model, Schema} from "mongoose";
 import {TTranslateData} from "../utils/types";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
-export type TNpc = {
-    name: string
+export type TNpc = TCommonFields & {
     location: string
     time: string
-    translate: TTranslateData
-    notes: Array<string>
 }
 const NpcSchema = new Schema<TNpc>({
     name: {type: String, required: true},
     location: {type:String, default: ''},
     time: {type: String, default: 'Always'},
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 
 export const NpcModel = model<TNpc>('Npc', NpcSchema)

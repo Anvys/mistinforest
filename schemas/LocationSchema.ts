@@ -1,16 +1,14 @@
 import {model, Schema} from "mongoose";
-import {TMapPosition, TTranslateData} from "../utils/types";
+import {TMapPosition} from "../utils/types";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
-export type TLocation = {
-    name: string
+export type TLocation = TCommonFields & {
     exploreReq: number
     quest: string
     pos: TMapPosition
     icon: string
     region: string
     moveTo: string | ''
-    translate: TTranslateData
-    notes: Array<string>
 }
 const LocationSchema = new Schema<TLocation>({
     name: {type: String, required: true},
@@ -23,12 +21,7 @@ const LocationSchema = new Schema<TLocation>({
     icon: {type: String, default: ''},
     region: {type: String},
     moveTo: {type: String, default: ''},
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 
 export const LocationModel = model<TLocation>('Locations', LocationSchema);

@@ -1,9 +1,9 @@
 import {model, Schema} from "mongoose";
-import {TBonus, TSkills, TTranslateData, TWeapons} from "../utils/types";
+import {TBonus, TWeapons} from "../utils/types";
 import {TAbility} from "./AbilitySchema";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
-export type TCompanion = {
-    name: string
+export type TCompanion = TCommonFields & {
     type: 'Human' | 'Transport' | 'Tamed'
     evoType: 'Gold' | 'Silver'
     isBattle: boolean
@@ -20,8 +20,6 @@ export type TCompanion = {
     abilities: Array<TAbility>
 
     icon: string
-    translate: TTranslateData
-    notes: Array<string>
 }
 const CompanionSchema = new Schema<TCompanion>({
     name: {type: String, required: true},
@@ -32,7 +30,7 @@ const CompanionSchema = new Schema<TCompanion>({
     lifeMax: {type: Number, required: true},
     staminaMax: {type: Number, required: true},
     armorMax: {type: Number, required: true},
-    location: {type:String, default: ''},
+    location: {type: String, default: ''},
     evoQuests: [{type: String, default: ''}],
     weapon: {type: String, required: true},
     icon: {type: String, default: ''},
@@ -43,12 +41,7 @@ const CompanionSchema = new Schema<TCompanion>({
         count: {type: Number, required: true},
     }],
     abilities: [{type: Object, required: false}],
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 
 export const CompanionModel = model<TCompanion>('Companions', CompanionSchema)

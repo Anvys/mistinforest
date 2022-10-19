@@ -1,5 +1,6 @@
 import {InferSchemaType, model, Schema} from "mongoose";
 import {IResources} from "../utils/types";
+import {commonSchemaFields, TCommonFields} from "./commonSchema";
 
 export type TComponentType = 'Plant' | 'Gem' | 'Substance' | 'Powder' | 'Sap' | 'Pollen' | 'Artefact'
 type TComponentAttributes = {
@@ -24,7 +25,7 @@ type TComponentAttributes = {
     Radiam: number
     Stratam: number
 }
-export type TComponent = IResources<TComponentType, TComponentAttributes>
+export type TComponent = TCommonFields & IResources<TComponentType, TComponentAttributes>
 
 const ComponentsSchema = new Schema<TComponent>({
     name: {type: String, required: true},
@@ -59,12 +60,7 @@ const ComponentsSchema = new Schema<TComponent>({
     tier: {type: Number, required: true},
     goldCost: {type: Number, default: 0},
     encumbrance: {type: Number, default: 0},
-    translate: {
-        En: {type: String, default: ''},
-        Fr: {type: String, default: ''},
-        Ru: {type: String, default: ''},
-    },
-    notes: [{type: String}],
+    ...commonSchemaFields
 })
 export type TComponentsSchema = InferSchemaType<typeof ComponentsSchema>
-export const ComponentModel =  model<TComponent>('components', ComponentsSchema)
+export const ComponentModel = model<TComponent>('components', ComponentsSchema)

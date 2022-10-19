@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.app = void 0;
+exports.app = exports.tempIp = void 0;
 const express_1 = __importDefault(require("express"));
 const dbconnect_1 = require("./db/dbconnect");
 const statusCodes_1 = require("./utils/statusCodes");
@@ -32,6 +32,7 @@ const QuestItemSchema_1 = require("./schemas/QuestItemSchema");
 const QuestItemSourceSchema_1 = require("./schemas/QuestItemSourceSchema");
 const ShopSchema_1 = require("./schemas/ShopSchema");
 const TrainerSchema_1 = require("./schemas/TrainerSchema");
+exports.tempIp = '92.101.149.85';
 const port = Number(process.env.SERVER_PORT) || 3333;
 // const allowPort = process.env.SERVER_PORT || 3000;
 const serverHost = process.env.SERVER_HOST || `localhost`;
